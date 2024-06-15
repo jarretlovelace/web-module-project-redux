@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
+
+import { deleteMovie } from './../actions/moviesActions'
+import { addFavorite } from './../actions/favoritesActions'
 
 const Movie = (props) => {
     const { id } = useParams();
     const { push } = useHistory();
 
-    const movies = [];
+    const { movies, displayFavorites, deleteMovie, addFavorite } = props;
     const movie = movies.find(movie=>movie.id===Number(id));
-    
+
+    const handleDeleteClick = () => {
+        deleteMovie(movie.id);
+        push('/movies');
+        }
+
+        const handleFavoriteClick = () => {
+            addFavorite(movie);
+        }
+
     return(<div className="modal-page col">
         <div className="modal-dialog">
             <div className="modal-content">
@@ -46,5 +58,4 @@ const Movie = (props) => {
         </div>
     </div>);
 }
-
 export default Movie;
